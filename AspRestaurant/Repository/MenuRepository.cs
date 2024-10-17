@@ -31,6 +31,22 @@ namespace AspRestaurant.Repository
             return allMenu;
         }
 
+        //GetItemById
+        public async Task<Menu> GetMenuByIdAsync(int id)
+        {
+            var getItem = await _context.Menus.Where(x => x.Id == id).Select(x => new Menu() {
+                Id = x.Id,
+                Name = x.Name,
+                Recipe = x.Recipe,
+                Image = x.Image,
+                Price = x.Price,
+                CategoryId = x.CategoryId,
+                Category = x.Category,
+
+            }).FirstOrDefaultAsync();
+            return getItem;
+        }
+
         //add Item in the menu
         public async Task<Menu> AddItemAsync(MenuModel menuModel)
         {
@@ -59,6 +75,7 @@ namespace AspRestaurant.Repository
                 Image = menuModel.Image,
                 Price = menuModel.Price,
                 CategoryId = menuModel.CategoryId,
+
             };
 
             _context.Menus.Update(updateItem);

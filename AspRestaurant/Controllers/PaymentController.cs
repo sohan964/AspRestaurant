@@ -24,7 +24,7 @@ namespace AspRestaurant.Controllers
             var paymentIntentService = new PaymentIntentService();
             var paymentIntent = await paymentIntentService.CreateAsync(new PaymentIntentCreateOptions
             {
-                Amount = (long)payAmount * 100,
+                Amount = (long)(payAmount * 100),
                 Currency = "usd",
                 AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
                 {
@@ -44,13 +44,24 @@ namespace AspRestaurant.Controllers
         public async Task<IActionResult> StorePayment(PaymentModel payment)
         {
             var storedPayment = await _paymentRepository.StorePaymentAsync(payment);
+            
             return Ok(storedPayment);
         }
         
         //Get all  payment info
-        //[HttpPost("")]
-       // public 
+        [HttpGet("userId")]
+        public async Task<IActionResult> GetPaymentHistory([FromQuery] string id)
+        {   var res = await _paymentRepository.GetPaymentHistoryAsync(id);
+            return Ok(res);
+        }
 
+        //Getll all item pay info
+        [HttpGet("allitems/userId")]
+        public async Task<IActionResult> GetBuyItems([FromQuery] string id)
+        {
+            var res = await _paymentRepository.GetBuyMenuAsync(id);
+            return Ok(res);
+        }
 
 
         

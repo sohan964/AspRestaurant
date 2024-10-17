@@ -24,5 +24,21 @@ namespace AspRestaurant.Repository
             }).ToListAsync();
             return Reviews;
         }
+
+        //add review
+        public async Task<Review> AddReviewAsync(Review review)
+        {
+            var newReview = new Review()
+            {
+                Name = review.Name,
+                Details = review.Details,
+                Rating = review.Rating,
+                
+            };
+
+            _context.Reviews.Add(newReview);
+            await _context.SaveChangesAsync();
+            return newReview;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AspRestaurant.Repository;
+﻿using AspRestaurant.Data;
+using AspRestaurant.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,13 @@ namespace AspRestaurant.Controllers
         {
             var Reviews = await _reviewRepository.GetReviewsAsync();
             return Ok(Reviews);
+        }
+
+        [HttpPost("")]
+        public async Task<IActionResult> AddReview([FromBody] Review review)
+        {
+            var res = await _reviewRepository.AddReviewAsync(review);
+            return Ok(res);
         }
     }
 }

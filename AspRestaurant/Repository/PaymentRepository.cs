@@ -43,7 +43,36 @@ namespace AspRestaurant.Repository
             await _context.AmountDetails.AddAsync(amountDetails);
             await _context.SaveChangesAsync();
 
-            return new { indertedCount = "success" };
+            return new { insertedCount = "success" };
+
+        }
+
+        public async Task<List<AmountDetails>> GetPaymentHistoryAsync(string id)
+        {
+            var payDetails = await _context.AmountDetails.Where(x => x.UserId == id).Select(pay => new AmountDetails() {
+                Id = pay.Id,
+                Amount = pay.Amount,
+                UserId = pay.UserId,
+                TransactionId=pay.TransactionId,
+
+            }).ToListAsync();
+
+            return payDetails;
+
+        }
+
+        public async Task<List<Payment>> GetBuyMenuAsync(string id)
+        {
+            var totalPays = await _context.Payments.Where(x => x.UserId == id).Select(pay => new Payment() {
+                Id=pay.Id,
+                UserId=pay.UserId,
+                TransactionId= pay.TransactionId,
+                MenuId=pay.MenuId,
+                Menu = pay.Menu,
+                
+            }).ToListAsync();
+
+            return totalPays;
 
         }
     }

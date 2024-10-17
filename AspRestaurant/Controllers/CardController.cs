@@ -24,8 +24,8 @@ namespace AspRestaurant.Controllers
             return Ok(cards);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCardsByUserId([FromRoute] string id)
+        [HttpGet("userId")]
+        public async Task<IActionResult> GetCardsByUserId([FromQuery] string id)
         {
             var cards = await _cardRepository.GetCardByUserAsync(id);
             return Ok(cards);
@@ -45,7 +45,7 @@ namespace AspRestaurant.Controllers
             return Ok(deleteCards);
         }
 
-        [HttpDelete("delete/{cardId}")]
+        [HttpDelete("Delete/{cardId}")]
         public async Task<IActionResult> DeleteCardById([FromRoute] int cardId)
         {
             var deleteCard = await _cardRepository.DeleteCardByIdAsync(cardId);

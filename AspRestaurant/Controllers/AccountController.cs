@@ -25,7 +25,7 @@ namespace AspRestaurant.Controllers
             var Result = await _accountRepository.SignUpAsync(signUp);
             if (Result.Succeeded)
             {
-                return Ok(Result.Succeeded);
+                return Ok(new { status=200 });
             }
             return Unauthorized();
         }
@@ -70,7 +70,7 @@ namespace AspRestaurant.Controllers
         }
 
         [Authorize]
-        [HttpPut("{email}")]
+        [HttpPut("MakeAdmin/{email}")]
         public async Task<IActionResult> UpdateUserRole([FromRoute] string email)
         {
             var userEmail = HttpContext.User?.Claims?.First()?.Value;

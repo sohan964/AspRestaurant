@@ -42,6 +42,8 @@ builder.Services.AddAuthentication(option =>
 
 });
 
+
+
 //accountRepository
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 //MenuReposiory
@@ -54,6 +56,17 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICardRepository, CardRepository>();
 //Payment 
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
+
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 //Adding Stripe configuration
 StripeConfiguration.ApiKey = "sk_test_51OlWFUDfRJUn5qMUwhdPj3mt7IueKqmcDeXpVxH3fwHsFpLcjqwnHR88dOTMY2jDSK4BZcJxVeFCFMWYHpXfVzvL009UCxAO7t";
@@ -77,6 +90,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

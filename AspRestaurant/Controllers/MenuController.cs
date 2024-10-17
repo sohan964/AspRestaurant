@@ -26,6 +26,13 @@ namespace AspRestaurant.Controllers
             return Ok(allMenu);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMenuById([FromRoute] int id)
+        {
+            var item = await _menuRepository.GetMenuByIdAsync(id);
+            return Ok(item);
+        }
+
         [HttpPost("")]
         [Authorize]
         public async Task<IActionResult> AddItem([FromBody]MenuModel menuModel)
